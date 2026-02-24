@@ -81,6 +81,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import axios from "@/axios.js";
+import { useAuth } from "@/services/composables/useAuth.js";
 
 const email = ref("");
 const password = ref("");
@@ -88,6 +89,7 @@ const loading = ref(false);
 const errorMessage = ref("");
 const errors = ref({});
 const router = useRouter();
+const { loadUser } = useAuth();
 
 const login = async () => {
     loading.value = true;
@@ -102,8 +104,41 @@ const login = async () => {
 
         const response = await axios.get("/api/user");
         console.log("Utilisateur connecté :", response.data);
+        console.log("Rôles reçus:", response.data.roles);
+        console.log("Type des rôles:", typeof response.data.roles);
+        console.log("Rôles array?:", Array.isArray(response.data.roles));
 
-        router.push("/welcome");
+        // Store user data in localStorage
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("roles", JSON.stringify(response.data.roles));
+
+        // Ensure composable state is populated (so components like AdminDashboard can read roles)
+        try {
+          await loadUser();
+        } catch (e) {
+          console.warn('loadUser failed, continuing with local roles', e);
+        }
+
+        // Redirect based on role
+        const roles = response.data.roles || [];
+        console.log("Rôles finaux pour redirection:", roles);
+        console.log("Contains admin?:", roles.includes("admin"));
+        console.log("Contains etudiant?:", roles.includes("etudiant"));
+        console.log("Contains enseignant?:", roles.includes("enseignant"));
+
+        if (roles.includes("admin")) {
+            console.log("Redirection vers admin-dashboard");
+            router.push("/admin-dashboard");
+        } else if (roles.includes("etudiant")) {
+            console.log("Redirection vers student-dashboard");
+            router.push("/student-dashboard");
+        } else if (roles.includes("enseignant")) {
+            console.log("Redirection vers teacher-dashboard");
+            router.push("/teacher-dashboard");
+        } else {
+            console.log("Redirection vers welcome (aucun rôle)");
+            router.push("/welcome");
+        }
     } catch (error) {
         console.error("Login failed:", error);
         console.log("Error response:", error.response?.data);

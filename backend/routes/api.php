@@ -8,16 +8,12 @@ use App\Http\Controllers\EnseignantController;
 
 // Public routes (no auth required for now, auth should be added)
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
+    return response()->json([
+        'user'        => $request->user(),
+        'roles'       => $request->user()->getRoleNames(),
+        'permissions' => $request->user()->getAllPermissions()->pluck('name'),
+    ]);
 });
-
-Route::get('/user', function (Request $request) {
-        return response()->json([
-            'user'        => $request->user(),
-            'roles'       => $request->user()->getRoleNames(),        // ['admin', 'editor']
-            'permissions' => $request->user()->getAllPermissions()->pluck('name'), // ['éditer articles', ...]
-        ]);
-    });
 
 // Admin Routes - Protected
 Route::middleware(['auth:sanctum'])->group(function () {
