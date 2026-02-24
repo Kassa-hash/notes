@@ -2,42 +2,36 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use App\Models\User;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        //
-
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // create permissions
-        Permission::create(['name' => 'inscription etudiants']);
-        Permission::create(['name' => 'gérer utilisateurs']);
-        Permission::create(['name' => 'inscription enseignants']);
-        Permission::create(['name' => 'CRUD notes']);
-        Permission::create(['name' => 'read notes']);
+        // Permissions
+        Permission::firstOrCreate(['name' => 'inscription etudiants']);
+        Permission::firstOrCreate(['name' => 'gérer utilisateurs']);
+        Permission::firstOrCreate(['name' => 'inscription enseignants']);
+        Permission::firstOrCreate(['name' => 'CRUD notes']);
+        Permission::firstOrCreate(['name' => 'read notes']);
 
+        // Roles
+        $admin = Role::firstOrCreate(['name' => 'admin']);
+        $enseignant = Role::firstOrCreate(['name' => 'enseignant']);
+        $etudiant = Role::firstOrCreate(['name' => 'etudiant']);
 
-        $admin = Role::create(['name' => 'admin']);
-        $admin->givePermissionTo('inscription etudiants');
-        $admin->givePermissionTo('gérer utilisateurs');
-        $admin->givePermissionTo('inscription enseignants');
+        // Give permissions safely
+        $admin->givePermissionTo([
+            'inscription etudiants',
+            'gérer utilisateurs',
+            'inscription enseignants'
+        ]);
 
-        $enseignant = Role::create(['name' => 'enseignant']);
         $enseignant->givePermissionTo('CRUD notes');
-
-        $etudiant = Role::create(['name' => 'etudiant']);
         $etudiant->givePermissionTo('read notes');
-
-        
     }
 }

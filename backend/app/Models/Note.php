@@ -17,3 +17,4 @@ class Note extends Model
         return $this->belongsTo(Matiere::class,'idMatiere');
     }
 }
+?>
