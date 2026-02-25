@@ -64,7 +64,9 @@
           {{ promo.libelle }}
         </option>
       </select>
-      <p v-if="errors.idpromotion" class="mt-1 text-sm text-red-500">{{ errors.idpromotion }}</p>
+      <p v-if="errors.idpromotion" class="mt-1 text-sm text-red-500">
+        {{ errors.idpromotion }}
+      </p>
     </div>
 
     <div>
@@ -82,10 +84,14 @@
           {{ classe.libelle }}
         </option>
       </select>
-      <p v-if="errors.idclasse" class="mt-1 text-sm text-red-500">{{ errors.idclasse }}</p>
+      <p v-if="errors.idclasse" class="mt-1 text-sm text-red-500">
+        {{ errors.idclasse }}
+      </p>
     </div>
 
-    <p v-if="successMessage" class="text-sm text-green-500 font-semibold">{{ successMessage }}</p>
+    <p v-if="successMessage" class="text-sm text-green-500 font-semibold">
+      {{ successMessage }}
+    </p>
     <p v-if="errorMessage" class="text-sm text-red-500">{{ errorMessage }}</p>
 
     <button
@@ -102,6 +108,16 @@
 import { ref } from "vue";
 import FormField from "../shared/FormField.vue";
 import { adminService } from "@/services/api/admin.service.js";
+import { onMounted } from "vue";
+
+onMounted(async () => {
+  try {
+    promotions.value = await adminService.getPromotions();
+    classes.value = await adminService.getClasses();
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 const form = ref({
   name: "",
@@ -149,7 +165,7 @@ const submitForm = async () => {
       idpromotion: "",
       idclasse: "",
     };
-    
+
     emit("student-created");
   } catch (error) {
     if (error.errors) {

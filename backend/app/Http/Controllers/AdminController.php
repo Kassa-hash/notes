@@ -6,6 +6,9 @@ use App\Models\User;
 use App\Models\Etudiant;
 use App\Models\Enseignant;
 use Illuminate\Http\Request;
+use App\Models\Promotion;
+use App\Models\Classe;
+use App\Models\Matiere;
 
 class AdminController extends Controller
 {
@@ -84,5 +87,20 @@ class AdminController extends Controller
             'user' => $user,
             'enseignant' => $enseignant,
         ], 201);
+    }
+
+    public function getPromotions()
+    {
+        return Promotion::all();
+    }
+
+    public function getClasses()
+    {
+        return Classe::all();
+    }
+
+    public function getMatieres()
+    {
+        return Matiere::all();
     }
 }

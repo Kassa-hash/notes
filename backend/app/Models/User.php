@@ -12,6 +12,8 @@ class User extends Authenticatable
 {
 
     use HasRoles, Notifiable;
+
+    protected $guard_name = 'api';
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 

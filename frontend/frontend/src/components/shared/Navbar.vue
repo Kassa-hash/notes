@@ -3,7 +3,7 @@
     <div class="max-w-7xl mx-auto px-6 py-4">
       <div class="flex justify-between items-center">
         <div class="flex items-center gap-3">
-          <h1 class="text-2xl font-bold text-orange-500">CVCREATION</h1>
+          <h1 class="text-2xl font-bold text-orange-500">Gestion de notes</h1>
         </div>
         
         <div class="flex items-center gap-8">

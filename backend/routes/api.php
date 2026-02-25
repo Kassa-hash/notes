@@ -44,3 +44,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         ->middleware('role:enseignant');
 });
 
+Route::get('/admin/promotions', [AdminController::class, 'getPromotions']);
+Route::get('/admin/classes', [AdminController::class, 'getClasses']);
+Route::get('/admin/matieres', [AdminController::class, 'getMatieres']);
+

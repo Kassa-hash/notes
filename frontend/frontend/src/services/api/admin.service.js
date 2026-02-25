@@ -35,4 +35,34 @@ export const adminService = {
       throw error.response?.data || error;
     }
   },
+
+   async getPromotions() {
+    try {
+      const response = await axios.get("/api/admin/promotions");
+      return response.data;
+    } catch (error) {
+      console.error("Get promotions failed:", error);
+      throw error.response?.data || error;
+    }
+  },
+
+  async getClasses() {
+    try {
+      const response = await axios.get("/api/admin/classes");
+      return response.data;
+    } catch (error) {
+      console.error("Get classes failed:", error);
+      throw error.response?.data || error;
+    }
+  },
+
+    async getMatieres() {
+        try {
+      const response = await axios.get("/api/admin/matieres");
+      return response.data;
+    } catch (error) {
+      console.error("Get matieres failed:", error);
+      throw error.response?.data || error;
+    }
+    }
 };

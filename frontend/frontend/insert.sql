@@ -9,3 +9,13 @@ Alice Dupont	alice@example.com
 Bob Martin	bob@example.com
 	secret456
 Charlie Nguyen	mypassword789
+
+INSERT INTO classes (libelle, created_at, updated_at) VALUES
+('L1 Informatique', NOW(), NOW()),
+('L2 Informatique', NOW(), NOW()),
+('L3 Informatique', NOW(), NOW()),
+('M1 Génie Logiciel', NOW(), NOW()),
+('M2 Réseaux et Sécurité', NOW(), NOW());
+
+INSERT INTO model_has_roles (role_id, model_type, model_id)
+VALUES (4, 'App\\Models\\User', 10);

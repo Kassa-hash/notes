@@ -3,7 +3,7 @@
     <div class="mx-auto w-full">
       <div class="flex items-center justify-center gap-3">
         <!-- <img class="size-8" src="/src/assets/logo.svg" alt="Your Brand" /> -->
-        <h1 class="pt-1 font-semibold">CVCREATION</h1>
+        <h1 class="pt-1 font-semibold">Gestion de notes</h1>
       </div>
       <h2 class="mt-10 text-center text-2xl font-semibold leading-9 tracking-tight">
         Create your account

@@ -83,6 +83,8 @@
 import { ref } from "vue";
 import FormField from "../shared/FormField.vue";
 import { adminService } from "@/services/api/admin.service.js";
+import { onMounted } from "vue";
+
 
 const form = ref({
   name: "",
@@ -91,6 +93,14 @@ const form = ref({
   nom: "",
   dateentree: "",
   matieres: [],
+});
+
+onMounted(async () => {
+  try {
+    matieres.value = await adminService.getMatieres();
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 const loading = ref(false);
